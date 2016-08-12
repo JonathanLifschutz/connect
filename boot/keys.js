@@ -20,20 +20,6 @@ var keys
 try { keys = keygen.loadKeyPairs() } catch (e) {}
 
 /**
- * If the keypairs don't exist, try to create them
- */
-
-if (!keys) {
-  try {
-    keygen.generateKeyPairs()
-    keys = keygen.loadKeyPairs()
-  } catch (e) {
-    console.log(e)
-    process.exit(1)
-  }
-}
-
-/**
  * Export
  */
 
