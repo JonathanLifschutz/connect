@@ -28,27 +28,18 @@ exports.isOOB = isOOB
 
 function readSetupToken (cb) {
   var token
-  var write = false
 
   try {
     // try to read setup token from filesystem
     token = keygen.loadSetupToken()
-    // if token is blank, try to generate a new token and save it
+
+    // token is blank
     if (!token.trim()) {
-      write = true
+      cb(new Error('Setup token is blank'), null)
     }
   } catch (err) {
-    // if unable to read, try to generate a new token and save it
-    write = true
-  }
-
-  if (write) {
-    try {
-      token = keygen.generateSetupToken()
-    } catch (err) {
-      // if we can't write the token to disk, something is very wrong
-      return cb(err)
-    }
+    // cannot read token from disk
+    return cb(err, null)
   }
 
   // return the token
